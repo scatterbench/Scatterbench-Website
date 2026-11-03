@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="description" content="ScatterBench: clear, detailed PC gaming benchmark results and interactive performance graphs.">
+  <title>Home | ScatterBench</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#1a1a1a;--surface:#262626;--surface-alt:#303030;--border:#404040;--text:#f7f4ea;--sub:#d6d1bf;--muted:#b4ad99;--accent:#f3de8a;--accent-deep:#cdbb63}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;display:flex;flex-direction:column}
+    a{color:inherit}
+    header{padding:24px 8%;border-bottom:1px solid #3a3a3a;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .logo{font-size:22px;font-weight:800;letter-spacing:-1px;color:#fff;text-decoration:none;white-space:nowrap}
+    .logo span,.eyebrow{color:var(--accent)}
+    nav{display:flex;align-items:center;gap:25px;flex-wrap:wrap}
+    nav a{color:var(--sub);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s}
+    nav a:hover,nav a:focus-visible,nav a.active{color:var(--accent)}
+    a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+    main{width:100%;max-width:1240px;margin:0 auto;padding:84px 30px 95px;flex:1}
+    .hero{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:52px;align-items:center;margin-bottom:98px}
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;line-height:1.5}
+    h1{font-size:clamp(42px,5.2vw,66px);letter-spacing:-2.8px;line-height:1.12;margin:21px 0 23px}
+    h1 span{color:var(--accent)}
+    .intro{max-width:510px;font-size:15px;color:var(--sub);line-height:1.85;margin:0 0 30px}
+    .buttons{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .button{display:inline-flex;justify-content:center;align-items:center;gap:13px;padding:14px 20px;background:var(--accent-deep);border:1px solid var(--accent-deep);border-radius:7px;text-decoration:none;font-size:13px;font-weight:700;color:#1a1a1a;transition:background .2s,border-color .2s,transform .2s}
+    .button:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+    .subtle-link{text-decoration:none;font-size:12px;color:var(--sub);font-weight:600;padding:13px}
+    .subtle-link:hover{color:var(--accent)}
+    .preview{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:23px 24px 20px;min-width:0}
+    .preview-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+    .preview-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1.3px}
+    .chip{font-size:10px;color:var(--accent);font-weight:700;background:#4a4330;padding:6px 9px;border-radius:5px;white-space:nowrap}
+    .preview h2{font-size:18px;letter-spacing:-.5px;margin:6px 0 5px}
+    .preview p{font-size:12px;color:var(--sub);margin:0 0 6px;line-height:1.7}
+    .preview-chart{display:block;width:100%;height:auto;margin:19px 0 11px}
+    .chart-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin:-3px 4px 17px 5px}
+    .preview-footer{border-top:1px solid #454545;padding-top:15px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .preview-key{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--sub)}
+    .preview-key:before{content:"";width:15px;height:3px;background:var(--accent);border-radius:5px}
+    .preview-footer a{font-size:11px;font-weight:700;color:var(--accent);text-decoration:none}
+    .preview-footer a:hover{text-decoration:underline}
+    .section-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}
+    .section-head h2{font-size:20px;letter-spacing:-.5px;margin:0}
+    .section-head span{font-size:12px;color:var(--muted)}
+    .benchmark{background:var(--surface);border:1px solid var(--border);border-radius:11px;display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px;transition:border-color .2s}
+    .benchmark:hover{border-color:#7d7251}
+    .benchmark-info{min-width:0;flex:1}
+    .benchmark .category{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1px;margin-bottom:10px}
+    .benchmark h3{font-size:18px;margin:0 0 10px;letter-spacing:-.4px}
+    .benchmark p{font-size:12px;line-height:1.7;margin:0;color:var(--sub)}
+    .benchmark-side{display:flex;align-items:center;gap:23px;flex-shrink:0}
+    .metric{border-left:1px solid #484848;padding-left:22px}
+    .metric .number{font-weight:800;font-size:22px;line-height:1.25;white-space:nowrap}
+    .metric .unit{font-size:10px;color:var(--accent)}
+    .metric .name{font-size:10px;color:var(--muted);margin-top:5px;white-space:nowrap}
+    .open-benchmark{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:12px 14px;border:1px solid #555;border-radius:7px;font-size:12px;color:var(--text);font-weight:700;white-space:nowrap;transition:background .2s,border-color .2s}
+    .open-benchmark:hover{background:var(--accent-deep);border-color:var(--accent-deep);color:#1a1a1a}
+    footer{border-top:1px solid #3a3a3a;padding:24px;text-align:center;color:var(--muted);font-size:12px}
+    @media(max-width:1000px){.hero{gap:28px}.benchmark{align-items:flex-start}.benchmark-side{flex-wrap:wrap;gap:15px}.metric{padding-left:15px}}
+    @media(max-width:800px){main{padding:58px 25px 76px}.hero{grid-template-columns:1fr;gap:38px;margin-bottom:74px}h1{font-size:clamp(38px,7vw,58px)}.preview{max-width:640px}.benchmark{flex-direction:column;align-items:stretch}.benchmark-side{justify-content:space-between}}
+    @media(max-width:550px){header{padding:20px 6%}nav{gap:18px}main{padding:47px 20px 65px}h1{font-size:41px;letter-spacing:-1.8px}.preview{padding:18px}.benchmark{padding:20px}.benchmark-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:19px}.metric{padding-left:12px}.metric:first-child{border-left:none;padding-left:0}.open-benchmark{grid-column:1/-1;justify-content:center}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button,.benchmark,.open-benchmark,nav a{transition:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo" aria-label="ScatterBench home">Scatter<span>Bench</span></a>
+    <nav aria-label="Main navigation">
+      <a class="active" aria-current="page" href="index.html">Home</a>
+      <a href="graphs.html">Graphs</a>
+      <a href="https://discord.gg/VrHx9UgXsH" target="_blank" rel="noopener noreferrer">Discord ↗</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow">SCATTERBENCH / PC PERFORMANCE</div>
+        <h1 id="hero-title">Performance.<br><span>Made clear.</span></h1>
+        <p class="intro">Explore PC gaming benchmarks with detailed framerate graphs, frametimes, and hardware monitoring. All the numbers that matter, in one place.</p>
+        <div class="buttons">
+          <a class="button" href="graphs.html">Explore benchmarks <span aria-hidden="true">↗</span></a>
+          <a class="subtle-link" href="#latest">Latest test ↓</a>
+        </div>
+      </div>
+      <div class="preview" aria-label="Framerate chart preview from the latest benchmark">
+        <div class="preview-head"><span class="preview-label">BENCHMARK PREVIEW</span><span class="chip">4K / CS2</span></div>
+        <h2>Framerate over time</h2>
+        <p>Counter-Strike 2 · Dust II</p>
+        <svg class="preview-chart" viewBox="0 0 600 226" role="img" aria-label="Recorded framerate in the first benchmark section, plotted over time">
+          <defs><linearGradient id="chart-fill" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#f3de8a" stop-opacity=".17"/><stop offset="100%" stop-color="#f3de8a" stop-opacity="0"/></linearGradient></defs>
+          <line x1="25" y1="26" x2="575" y2="26" stroke="#454545" stroke-dasharray="4 6"/>
+          <line x1="25" y1="84" x2="575" y2="84" stroke="#454545" stroke-dasharray="4 6"/>
+          <line x1="25" y1="142" x2="575" y2="142" stroke="#454545" stroke-dasharray="4 6"/>
+          <line x1="25" y1="200" x2="575" y2="200" stroke="#454545"/>
+          <path d="M25.0,90.2 L29.6,78.4 L34.2,120.2 L38.8,121.3 L43.5,121.7 L48.1,123.0 L52.7,85.2 L57.3,88.9 L61.9,77.1 L66.5,113.2 L71.1,123.7 L75.8,81.9 L80.4,127.8 L85.0,58.6 L89.6,98.4 L94.2,116.3 L98.8,112.3 L103.4,118.0 L108.1,114.5 L112.7,98.0 L117.3,128.7 L121.9,91.0 L126.5,110.6 L131.1,106.7 L135.7,137.8 L140.4,145.8 L145.0,104.1 L149.6,120.4 L154.2,111.0 L158.8,123.4 L163.4,124.7 L168.0,117.6 L172.7,141.7 L177.3,128.0 L181.9,113.2 L186.5,109.7 L191.1,127.6 L195.7,126.0 L200.3,116.5 L204.9,94.5 L209.6,89.3 L214.2,108.6 L218.8,112.8 L223.4,110.8 L228.0,127.4 L232.6,83.9 L237.2,116.3 L241.9,130.4 L246.5,101.0 L251.1,128.7 L255.7,118.7 L260.3,100.8 L264.9,116.3 L269.5,121.9 L274.2,127.4 L278.8,129.5 L283.4,145.4 L288.0,122.8 L292.6,94.3 L297.2,92.1 L301.8,103.4 L306.5,114.5 L311.1,111.7 L315.7,118.2 L320.3,115.4 L324.9,109.3 L329.5,106.5 L334.1,122.1 L338.8,129.3 L343.4,126.5 L348.0,125.4 L352.6,116.5 L357.2,112.8 L361.8,158.9 L366.4,111.5 L371.1,107.3 L375.7,87.3 L380.3,98.0 L384.9,100.0 L389.5,130.6 L394.1,100.4 L398.7,104.7 L403.4,113.7 L408.0,135.4 L412.6,113.2 L417.2,102.1 L421.8,119.1 L426.4,123.2 L431.0,56.9 L435.7,128.4 L440.3,112.3 L444.9,128.4 L449.5,136.7 L454.1,124.7 L458.7,139.3 L463.3,115.4 L468.0,99.3 L472.6,98.9 L477.2,123.2 L481.8,137.1 L486.4,108.0 L491.0,98.9 L495.6,101.0 L500.3,141.9 L504.9,114.5 L509.5,110.4 L514.1,126.0 L518.7,134.1 L523.3,59.3 L527.9,114.5 L532.6,118.2 L537.2,121.9 L541.8,125.2 L546.4,124.3 L551.0,131.1 L555.6,105.2 L560.2,102.6 L564.8,105.0 L569.5,121.7 L574.1,125.8 L575.0,118.7 L575,200 L25,200 Z" fill="url(#chart-fill)"/>
+          <path d="M25.0,90.2 L29.6,78.4 L34.2,120.2 L38.8,121.3 L43.5,121.7 L48.1,123.0 L52.7,85.2 L57.3,88.9 L61.9,77.1 L66.5,113.2 L71.1,123.7 L75.8,81.9 L80.4,127.8 L85.0,58.6 L89.6,98.4 L94.2,116.3 L98.8,112.3 L103.4,118.0 L108.1,114.5 L112.7,98.0 L117.3,128.7 L121.9,91.0 L126.5,110.6 L131.1,106.7 L135.7,137.8 L140.4,145.8 L145.0,104.1 L149.6,120.4 L154.2,111.0 L158.8,123.4 L163.4,124.7 L168.0,117.6 L172.7,141.7 L177.3,128.0 L181.9,113.2 L186.5,109.7 L191.1,127.6 L195.7,126.0 L200.3,116.5 L204.9,94.5 L209.6,89.3 L214.2,108.6 L218.8,112.8 L223.4,110.8 L228.0,127.4 L232.6,83.9 L237.2,116.3 L241.9,130.4 L246.5,101.0 L251.1,128.7 L255.7,118.7 L260.3,100.8 L264.9,116.3 L269.5,121.9 L274.2,127.4 L278.8,129.5 L283.4,145.4 L288.0,122.8 L292.6,94.3 L297.2,92.1 L301.8,103.4 L306.5,114.5 L311.1,111.7 L315.7,118.2 L320.3,115.4 L324.9,109.3 L329.5,106.5 L334.1,122.1 L338.8,129.3 L343.4,126.5 L348.0,125.4 L352.6,116.5 L357.2,112.8 L361.8,158.9 L366.4,111.5 L371.1,107.3 L375.7,87.3 L380.3,98.0 L384.9,100.0 L389.5,130.6 L394.1,100.4 L398.7,104.7 L403.4,113.7 L408.0,135.4 L412.6,113.2 L417.2,102.1 L421.8,119.1 L426.4,123.2 L431.0,56.9 L435.7,128.4 L440.3,112.3 L444.9,128.4 L449.5,136.7 L454.1,124.7 L458.7,139.3 L463.3,115.4 L468.0,99.3 L472.6,98.9 L477.2,123.2 L481.8,137.1 L486.4,108.0 L491.0,98.9 L495.6,101.0 L500.3,141.9 L504.9,114.5 L509.5,110.4 L514.1,126.0 L518.7,134.1 L523.3,59.3 L527.9,114.5 L532.6,118.2 L537.2,121.9 L541.8,125.2 L546.4,124.3 L551.0,131.1 L555.6,105.2 L560.2,102.6 L564.8,105.0 L569.5,121.7 L574.1,125.8 L575.0,118.7" fill="none" stroke="#f3de8a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        </svg>
+        <div class="chart-labels"><span>0s</span><span>Elapsed time</span><span>596s</span></div>
+        <div class="preview-footer"><span class="preview-key">Recorded FPS</span><a href="graphs.html">Full interactive graphs ↗</a></div>
+      </div>
+    </section>
+    <section id="latest" aria-labelledby="latest-heading">
+      <div class="section-head"><h2 id="latest-heading">Featured benchmark</h2><span>01 / Gaming</span></div>
+      <article class="benchmark">
+        <div class="benchmark-info">
+          <div class="category">GAMING / 4K</div>
+          <h3>Counter-Strike 2 — Dust II</h3>
+          <p>Deathmatch benchmark · Framerate, frametime, temperatures, utilization, and power.</p>
+        </div>
+        <div class="benchmark-side">
+          <div class="metric"><div class="number">95.26 <span class="unit">FPS</span></div><div class="name">Average framerate</div></div>
+          <div class="metric"><div class="number">72.48 <span class="unit">FPS</span></div><div class="name">1% low framerate</div></div>
+          <a class="open-benchmark" href="graphs.html" aria-label="View Counter-Strike 2 benchmark graphs">View results <span aria-hidden="true">↗</span></a>
+        </div>
+      </article>
+    </section>
+  </main>
+  <footer>© 2026 ScatterBench. All rights reserved.</footer>
+</body>
+</html>
