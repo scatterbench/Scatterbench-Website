@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="description" content="Browse ScatterBench categories, featured PC gaming benchmarks, and performance results.">
+  <title>Categories | ScatterBench</title>
+  <style>
+    :root { color-scheme:dark; --bg:#1a1a1a; --surface:#262626; --surface-hover:#2b2b2b; --line:#3d3d3d; --gold-line:#6b624b; --text:#f7f4ea; --sub:#d6d1bf; --muted:#ada795; --accent:#f3de8a; --accent-dark:#b9a65d; }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
+    a{color:inherit} button,input{font:inherit}
+    a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+    header{min-height:66px;padding:18px max(28px,calc((100vw - 1200px)/2));border-bottom:1px solid #353535;display:flex;justify-content:space-between;align-items:center;gap:18px}
+    .logo{font-size:20px;font-weight:800;letter-spacing:-1px;color:#fff;text-decoration:none;white-space:nowrap}
+    .logo span{color:var(--accent)}
+    nav{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+    nav a{font-size:12px;font-weight:650;color:var(--sub);text-decoration:none;transition:color .18s}
+    nav a:hover,nav a.active{color:var(--accent)}
+    main{width:min(100% - 48px,1200px);margin:0 auto;padding:66px 0 100px}
+    .hero{margin:0 0 48px;max-width:670px}
+    .eyebrow{font-size:10px;line-height:1.5;letter-spacing:2.4px;color:var(--accent);font-weight:800;margin:0 0 12px}
+    h1{font-weight:800;letter-spacing:-1.9px;line-height:1.14;font-size:clamp(36px,4.4vw,52px);margin:0;color:var(--text)}
+    .title-accent{display:block;width:49px;height:4px;border-radius:99px;background:var(--accent);margin:18px 0 19px}
+    .hero p:not(.eyebrow){font-size:13px;line-height:1.8;color:var(--sub);margin:0;max-width:570px}
+    .section{margin-top:39px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
+    .section-head h2{font-size:19px;line-height:1.3;letter-spacing:-.6px;margin:0;font-weight:800}
+    .section-head span{font-size:11px;color:var(--muted)}
+    .category-tools{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .category-tools label{flex:1;position:relative;display:block}
+    .category-tools input{background:#242424;border:1px solid #474747;color:var(--text);border-radius:9px;width:100%;padding:12px 14px 12px 39px;font-size:12px;min-height:43px}
+    .category-tools label:before{content:'⌕';position:absolute;left:15px;top:9px;font-size:22px;line-height:22px;color:var(--muted)}
+    .secondary-btn{border:1px solid #555;background:#262626;color:var(--sub);padding:11px 14px;border-radius:8px;font-weight:700;font-size:11px;cursor:pointer;white-space:nowrap}
+    .secondary-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .category-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+    .category-tile{display:flex;flex-direction:column;align-items:flex-start;text-align:left;background:#262626;border:1px solid #444;border-radius:10px;padding:18px;min-height:114px;color:var(--text);cursor:pointer;transition:border-color .2s,background .2s}
+    .category-tile:hover,.category-tile[aria-pressed="true"]{border-color:var(--accent-dark);background:#2b2923}
+    .tile-title{font-weight:800;font-size:14px;letter-spacing:-.35px;line-height:1.35;overflow-wrap:anywhere}
+    .tile-desc{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+    .tile-count{margin-top:auto;padding-top:11px;font-weight:700;font-size:10px;color:var(--accent)}
+    .featured-grid,.benchmark-grid{display:grid;gap:12px}
+    .benchmark{min-height:113px;background:var(--surface);border:1px solid var(--gold-line);border-radius:11px;padding:20px 23px;display:flex;align-items:center;gap:18px;justify-content:space-between;transition:border-color .2s,background .2s,transform .2s;text-decoration:none;color:var(--text)}
+    a.benchmark:hover{background:var(--surface-hover);border-color:var(--accent);transform:translateY(-1px)}
+    .thumb{flex:0 0 100px;max-width:100px;height:65px;object-fit:cover;border-radius:7px;border:1px solid #525252;background:#1e1e1e}
+    .benchmark-info{flex:1;min-width:0}
+    .badge{font-size:10px;font-weight:800;color:var(--accent);line-height:1.4;letter-spacing:.55px;margin:0 0 7px}
+    .benchmark h3{font-weight:800;font-size:16px;letter-spacing:-.4px;line-height:1.38;margin:0 0 7px;overflow-wrap:anywhere}
+    .benchmark p{font-size:11px;line-height:1.65;color:var(--sub);margin:0;overflow-wrap:anywhere}
+    .benchmark-side{display:flex;align-items:center;gap:21px;flex-shrink:0}
+    .metric{border-left:1px solid #484848;padding-left:20px}
+    .number{white-space:nowrap;font-size:20px;font-weight:800;line-height:1.25;letter-spacing:-.45px}
+    .unit{font-weight:800;font-size:9px;color:var(--accent);letter-spacing:0}
+    .name{white-space:nowrap;font-size:9px;margin-top:6px;color:var(--muted)}
+    .view-row{display:flex;justify-content:center;margin-top:17px}
+    .empty{background:#232323;border:1px dashed #494949;border-radius:10px;padding:26px;color:var(--muted);font-size:12px;line-height:1.7}
+    .category-detail{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}
+    .category-detail .section-head{margin:0}
+    .category-description{font-size:11px;line-height:1.6;color:var(--muted);margin:6px 0 0}
+    .detail-search{width:220px;max-width:100%;min-height:38px;border-radius:8px;padding:9px 12px;background:#242424;border:1px solid #494949;color:var(--text);font-size:11px}
+    footer{border-top:1px solid #343434;padding:24px;color:var(--muted);font-size:11px;text-align:center}
+    [hidden]{display:none!important}
+    @media(max-width:950px){header{padding:18px 5%}.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.benchmark-side{gap:12px}.metric{padding-left:13px}}
+    @media(max-width:700px){main{width:calc(100% - 36px);padding:44px 0 72px}.hero{margin-bottom:30px}.section{margin-top:32px}.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.benchmark{flex-wrap:wrap;padding:18px;gap:13px}.benchmark-side{width:100%;margin-left:0;justify-content:flex-start}.metric:first-child{border-left:0;padding-left:0}.category-detail{align-items:stretch;flex-direction:column}.detail-search{width:100%}}
+    @media(max-width:440px){header{padding:18px 5%;gap:10px}.logo{font-size:18px}nav{gap:12px}nav a{font-size:11px}.category-grid{gap:8px}.category-tile{padding:13px;min-height:108px}.section-head h2{font-size:17px}.thumb{width:75px;flex-basis:75px;height:58px}.number{font-size:19px}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}nav a,.benchmark,.category-tile{transition:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo" aria-label="ScatterBench home">Scatter<span>Bench</span></a>
+    <nav aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a class="active" aria-current="page" href="categories.html">Categories</a>
+      <a href="graphs.html">Graphs</a>
+      <a href="https://discord.gg/VrHx9UgXsH" target="_blank" rel="noopener noreferrer">Discord ↗</a>
+    </nav>
+  </header>
+  <main>
+    <div class="hero">
+      <p class="eyebrow">SCATTERBENCH / BENCHMARK LIBRARY</p>
+      <h1>Categories</h1>
+      <span class="title-accent" aria-hidden="true"></span>
+      <p>Explore detailed PC benchmarks organized by game, resolution, and test type. Select a category to find its performance results.</p>
+    </div>
+    <section class="section" aria-labelledby="browse-heading">
+      <div class="section-head"><h2 id="browse-heading">Browse categories</h2><span id="category-count"></span></div>
+      <div class="category-tools"><label><span class="sr-only" style="position:absolute;left:-10000px">Search categories</span><input id="category-search" type="search" placeholder="Search categories or benchmarks…" autocomplete="off" aria-label="Search categories or benchmarks"></label><button id="more-categories" type="button" class="secondary-btn" hidden>Show all</button></div>
+      <div class="category-grid" id="category-grid"></div>
+      <div class="empty" id="categories-empty" hidden>No categories match your search.</div>
+    </section>
+    <section class="section" id="featured-section" aria-labelledby="featured-heading">
+      <div class="section-head"><h2 id="featured-heading">Featured benchmarks</h2><span id="featured-count"></span></div>
+      <div class="featured-grid" id="featured-list"></div>
+      <div class="view-row"><button id="more-featured" class="secondary-btn" type="button" hidden>Show more featured benchmarks</button></div>
+    </section>
+    <section class="section" id="category-results" aria-labelledby="results-heading">
+      <div class="category-detail">
+        <div><div class="section-head"><h2 id="results-heading">Benchmarks</h2><span id="bench-count"></span></div><p class="category-description" id="category-description"></p></div>
+        <input id="benchmark-search" class="detail-search" type="search" placeholder="Search in this category…" aria-label="Search in selected category">
+      </div>
+      <div class="benchmark-grid" id="benchmark-list"></div>
+      <div class="empty" id="benchmarks-empty" hidden>No benchmarks match your selection yet.</div>
+      <div class="view-row"><button id="more-benchmarks" class="secondary-btn" type="button" hidden>Show more benchmarks</button></div>
+    </section>
+  </main>
+  <footer>ScatterBench · PC benchmark results</footer>
+  <script id="scatterbench-data" type="application/json">{"version":2,"categories":[{"slot":1,"name":"Ryzen 7 5700x","description":"High-resolution PC gaming performance benchmarks.","benchmarks":[{"slot":1,"title":"GTA V Remastered","badge":"4K","description":"Deathmatch benchmark","average":"52.86","low":"22.84","link":"GTA-Benchmark","preview":"","featured":true}]}]}</script>
+  <script>
+  (() => {
+    'use strict';
+    let data = {categories:[]};
+    try { data = JSON.parse(document.getElementById('scatterbench-data').textContent); } catch (error) { console.error('Could not read benchmark data', error); }
+    const categories = Array.isArray(data.categories) ? data.categories : [];
+    const $ = id => document.getElementById(id);
+    const clean = value => String(value ?? '').trim();
+    const el = (tag, className, text) => { const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node; };
+    function safeUrl(value) {
+      const raw = clean(value);
+      if (!raw || /[\x00-\x1f]/.test(raw)) return null;
+      try { const url = new URL(raw, document.baseURI); return ['https:', 'http:', 'file:'].includes(url.protocol) ? raw : null; }
+      catch (_) { return null; }
+    }
+    let active = categories[0] ?? null;
+    let expandCategories = false, expandFeatured = false, shown = 20;
+    const featured = categories.flatMap(c => (Array.isArray(c.benchmarks)?c.benchmarks:[]).filter(b=>b.featured).map(b => ({...b,categoryName:c.name})));
+    const headingCount = (count, noun) => `${count} ${noun}${count===1?'':'s'}`;
+    function card(b, categoryName) {
+      const href = safeUrl(b.link);
+      const card = el(href?'a':'article','benchmark');
+      if (href) { card.setAttribute('href',href); if (/^https?:\/\//i.test(href)) { card.target='_blank'; card.rel='noopener noreferrer'; } }
+      const preview = safeUrl(b.preview);
+      if (preview) { const img=el('img','thumb'); img.src=preview; img.alt=''; img.loading='lazy'; img.referrerPolicy='no-referrer'; card.append(img); }
+      const info=el('div','benchmark-info');
+      info.append(el('div','badge',clean(b.badge)||clean(categoryName)||'BENCHMARK'));
+      info.append(el('h3','',clean(b.title)||'Untitled benchmark'));
+      if (clean(b.description)) info.append(el('p','',clean(b.description)));
+      card.append(info);
+      const metrics=el('div','benchmark-side');
+      for (const [value,label] of [[b.average,'Average framerate'],[b.low,'1% low framerate']]) {
+        if (!clean(value)) continue;
+        const block=el('div','metric');
+        const number=el('div','number',clean(value)+' ');
+        number.append(el('span','unit','FPS'));
+        block.append(number,el('div','name',label));
+        metrics.append(block);
+      }
+      if (metrics.childElementCount) card.append(metrics);
+      return card;
+    }
+    function categoryMatches(c, term) {
+      return clean(c.name).toLowerCase().includes(term) || clean(c.description).toLowerCase().includes(term) || (c.benchmarks||[]).some(b=>[b.title,b.badge,b.description].some(s=>clean(s).toLowerCase().includes(term)));
+    }
+    function drawCategories() {
+      const term=clean($('category-search').value).toLowerCase();
+      const filtered=categories.filter(c=>categoryMatches(c,term));
+      $('category-count').textContent=headingCount(filtered.length,'category');
+      $('categories-empty').hidden=filtered.length!==0;
+      const display=expandCategories?filtered:filtered.slice(0,12);
+      const fragment=document.createDocumentFragment();
+      for (const c of display) {
+        const tile=el('button','category-tile'); tile.type='button';
+        tile.setAttribute('aria-pressed',String(active?.slot===c.slot));
+        tile.append(el('span','tile-title',clean(c.name)||`Category ${c.slot}`));
+        if (clean(c.description)) tile.append(el('span','tile-desc',clean(c.description)));
+        tile.append(el('span','tile-count',headingCount((c.benchmarks||[]).length,'benchmark')));
+        tile.addEventListener('click',()=>{active=c;shown=20;$('benchmark-search').value=''; drawCategories(); drawBenchmarks(); document.getElementById('category-results').scrollIntoView({behavior:'smooth',block:'start'});});
+        fragment.append(tile);
+      }
+      $('category-grid').replaceChildren(fragment);
+      $('more-categories').hidden=filtered.length<=12;
+      $('more-categories').textContent=expandCategories?'Show fewer':'Show all '+filtered.length;
+    }
+    function drawFeatured() {
+      $('featured-section').hidden=featured.length===0;
+      $('featured-count').textContent=`${String(Math.min(featured.length,4)).padStart(2,'0')} / ${String(featured.length).padStart(2,'0')} Featured`;
+      const list=expandFeatured?featured:featured.slice(0,4);
+      $('featured-list').replaceChildren(...list.map(b=>card(b,b.categoryName)));
+      $('more-featured').hidden=featured.length<=4;
+      $('more-featured').textContent=expandFeatured?'Show fewer':'Show all '+featured.length+' featured';
+    }
+    function drawBenchmarks() {
+      if (!active) {
+        $('results-heading').textContent='Benchmarks';$('bench-count').textContent='0 benchmarks';
+        $('category-description').textContent='Add categories and benchmarks using the ScatterBench HTML generator.';
+        $('benchmark-list').replaceChildren();$('benchmarks-empty').hidden=false;$('more-benchmarks').hidden=true;
+        return;
+      }
+      $('results-heading').textContent=clean(active.name)||`Category ${active.slot}`;
+      $('category-description').textContent=clean(active.description);
+      const term=clean($('benchmark-search').value).toLowerCase();
+      const filtered=(active.benchmarks||[]).filter(b=>[b.title,b.badge,b.description].some(s=>clean(s).toLowerCase().includes(term)));
+      $('bench-count').textContent=headingCount(filtered.length,'benchmark');
+      $('benchmark-list').replaceChildren(...filtered.slice(0,shown).map(b=>card(b,active.name)));
+      $('benchmarks-empty').hidden=filtered.length!==0;
+      $('more-benchmarks').hidden=filtered.length<=shown;
+      $('more-benchmarks').textContent=`Show more (${Math.min(20,filtered.length-shown)} of ${filtered.length-shown} remaining)`;
+    }
+    $('category-search').addEventListener('input',drawCategories);
+    $('benchmark-search').addEventListener('input',()=>{shown=20;drawBenchmarks();});
+    $('more-categories').addEventListener('click',()=>{expandCategories=!expandCategories;drawCategories();});
+    $('more-featured').addEventListener('click',()=>{expandFeatured=!expandFeatured;drawFeatured();});
+    $('more-benchmarks').addEventListener('click',()=>{shown+=20;drawBenchmarks();});
+    drawCategories();drawFeatured();drawBenchmarks();
+  })();
+  </script>
+</body>
+</html>
