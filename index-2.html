@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1a1a1a">
+  <meta name="description" content="ScatterBench: clear, detailed PC gaming benchmark results and interactive performance graphs.">
+  <title>Home | ScatterBench</title>
+  <link id="site-favicon" data-image="scatterbench2.png" rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxYTFhMWEiLz48cmVjdCB4PSIzIiB5PSIzIiB3aWR0aD0iNTgiIGhlaWdodD0iNTgiIHJ4PSIxMiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZjNkZThhIiBzdHJva2Utd2lkdGg9IjMiLz48dGV4dCB4PSIzMiIgeT0iNDIiIGZvbnQtZmFtaWx5PSJBcmlhbCxzYW5zLXNlcmlmIiBmb250LXNpemU9IjI2IiBmb250LXdlaWdodD0iODAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjZjNkZThhIj5TQjwvdGV4dD48L3N2Zz4=">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#1a1a1a;--surface:#262626;--surface-alt:#303030;--border:#404040;--text:#f7f4ea;--sub:#d6d1bf;--muted:#b4ad99;--accent:#f3de8a;--accent-deep:#cdbb63}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;display:flex;flex-direction:column}
+    a{color:inherit}
+    header{padding:24px 8%;border-bottom:1px solid #3a3a3a;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+    .logo{font-size:22px;font-weight:800;letter-spacing:-1px;color:#fff;text-decoration:none;white-space:nowrap}
+    .logo span,.eyebrow{color:var(--accent)}
+    nav{display:flex;align-items:center;gap:25px;flex-wrap:wrap}
+    nav a{color:var(--sub);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s}
+    nav a:hover,nav a:focus-visible,nav a.active{color:var(--accent)}
+    a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+    main{width:100%;max-width:1240px;margin:0 auto;padding:84px 30px 95px;flex:1}
+    .hero{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:52px;align-items:center;margin-bottom:98px}
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:2px;line-height:1.5}
+    h1{font-size:clamp(42px,5.2vw,66px);letter-spacing:-2.8px;line-height:1.12;margin:21px 0 23px}
+    h1 span{color:var(--accent)}
+    .intro{max-width:510px;font-size:15px;color:var(--sub);line-height:1.85;margin:0 0 30px}
+    .buttons{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .button{display:inline-flex;justify-content:center;align-items:center;gap:13px;padding:14px 20px;background:var(--accent-deep);border:1px solid var(--accent-deep);border-radius:7px;text-decoration:none;font-size:13px;font-weight:700;color:#1a1a1a;transition:background .2s,border-color .2s,transform .2s}
+    .button:hover{background:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
+    .subtle-link{text-decoration:none;font-size:12px;color:var(--sub);font-weight:600;padding:13px}
+    .subtle-link:hover{color:var(--accent)}
+    .preview{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:23px 24px 20px;min-width:0}
+    .preview-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+    .preview-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:1.3px}
+    .chip{font-size:10px;color:var(--accent);font-weight:700;background:#4a4330;padding:6px 9px;border-radius:5px;white-space:nowrap}
+    .preview h2{font-size:18px;letter-spacing:-.5px;margin:6px 0 5px}
+    .preview p{font-size:12px;color:var(--sub);margin:0 0 6px;line-height:1.7}
+    .preview-chart{display:block;width:100%;height:auto;margin:19px 0 11px}
+    .chart-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;margin:-3px 4px 17px 5px}
+    .preview-footer{border-top:1px solid #454545;padding-top:15px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .preview-key{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--sub)}
+    .preview-key:before{content:"";width:15px;height:3px;background:var(--accent);border-radius:5px}
+    .preview-footer a{font-size:11px;font-weight:700;color:var(--accent);text-decoration:none}
+    .preview-footer a:hover{text-decoration:underline}
+    .section-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:20px}
+    .section-head h2{font-size:20px;letter-spacing:-.5px;margin:0}
+    .section-head span{font-size:12px;color:var(--muted)}
+    .benchmark{background:var(--surface);border:1px solid var(--border);border-radius:11px;display:flex;align-items:center;justify-content:space-between;gap:30px;padding:26px;transition:border-color .2s}
+    .benchmark:hover{border-color:#7d7251}
+    .benchmark-info{min-width:0;flex:1}
+    .benchmark .category{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:1px;margin-bottom:10px}
+    .benchmark h3{font-size:18px;margin:0 0 10px;letter-spacing:-.4px}
+    .benchmark p{font-size:12px;line-height:1.7;margin:0;color:var(--sub)}
+    .benchmark-side{display:flex;align-items:center;gap:23px;flex-shrink:0}
+    .metric{border-left:1px solid #484848;padding-left:22px}
+    .metric .number{font-weight:800;font-size:22px;line-height:1.25;white-space:nowrap}
+    .metric .unit{font-size:10px;color:var(--accent)}
+    .metric .name{font-size:10px;color:var(--muted);margin-top:5px;white-space:nowrap}
+    .open-benchmark{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:12px 14px;border:1px solid #555;border-radius:7px;font-size:12px;color:var(--text);font-weight:700;white-space:nowrap;transition:background .2s,border-color .2s}
+    .open-benchmark:hover{background:var(--accent-deep);border-color:var(--accent-deep);color:#1a1a1a}
+    footer{border-top:1px solid #3a3a3a;padding:24px;text-align:center;color:var(--muted);font-size:12px}
+    @media(max-width:1000px){.hero{gap:28px}.benchmark{align-items:flex-start}.benchmark-side{flex-wrap:wrap;gap:15px}.metric{padding-left:15px}}
+    @media(max-width:800px){main{padding:58px 25px 76px}.hero{grid-template-columns:1fr;gap:38px;margin-bottom:74px}h1{font-size:clamp(38px,7vw,58px)}.preview{max-width:640px}.benchmark{flex-direction:column;align-items:stretch}.benchmark-side{justify-content:space-between}}
+    @media(max-width:550px){header{padding:20px 6%}nav{gap:18px}main{padding:47px 20px 65px}h1{font-size:41px;letter-spacing:-1.8px}.preview{padding:18px}.benchmark{padding:20px}.benchmark-side{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:19px}.metric{padding-left:12px}.metric:first-child{border-left:none;padding-left:0}.open-benchmark{grid-column:1/-1;justify-content:center}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button,.benchmark,.open-benchmark,nav a{transition:none}}
+  
+/* Generated featured benchmark additions */
+/* Navigation uses the exact sizing and spacing from the linked categories page. */
+header{min-height:0;padding:24px 8%;border-bottom:1px solid #3a3a3a;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.logo{font-family:Inter,Arial,sans-serif;font-size:22px;font-weight:800;letter-spacing:-1px;color:#fff;text-decoration:none;white-space:nowrap;line-height:normal;-webkit-text-stroke:0}
+.logo span{color:var(--accent)}
+nav{display:flex;align-items:center;gap:25px;flex-wrap:wrap;transform:none}
+nav a{color:var(--sub);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s;letter-spacing:normal;-webkit-text-stroke:0}
+nav a:hover,nav a:focus-visible,nav a.active{color:var(--accent)}
+@media(max-width:550px){header{padding:20px 6%}nav{gap:18px}}
+
+.featured-grid{display:grid;gap:15px}
+.preview-media-link{display:block;text-decoration:none;margin:19px 0 14px;overflow:hidden;border-radius:6px}
+.preview-image{width:100%;height:220px;object-fit:cover;background:#1b1b1b;display:block;border:1px solid #414141;border-radius:6px}
+.preview-embed{display:block;width:100%;height:255px;margin:19px 0 14px;border:1px solid #414141;border-radius:6px;background:#1b1b1b}
+/* Editable YouTube video module */
+.youtube-stage{position:relative;aspect-ratio:16/9;background:#141414;border:1px solid #454545;border-radius:8px;overflow:hidden;margin:19px 0 18px}
+.youtube-thumb{display:block;position:relative;width:100%;height:100%;margin:0;padding:0;border:0;background:#141414;color:#fff;cursor:pointer}
+.youtube-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+.youtube-thumb:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0004,#0001);pointer-events:none}
+.youtube-play-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;align-items:center;justify-content:center;width:68px;height:48px;background:#e62117;color:#fff;font-size:21px;padding-left:3px;border-radius:13px;box-shadow:0 5px 22px #0009;z-index:1;transition:background .15s,transform .15s}
+.youtube-thumb:hover .youtube-play-icon,.youtube-thumb:focus-visible .youtube-play-icon{background:#ff1b10;transform:translate(-50%,-50%) scale(1.05)}
+.youtube-stage iframe{display:block;width:100%;height:100%;border:0}
+.youtube-placeholder{height:100%;display:flex;align-items:center;justify-content:center;padding:22px;text-align:center;font-size:12px;color:var(--sub)}
+.youtube-links{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.preview-footer-right{justify-content:flex-end}
+@media(max-width:550px){.preview-image{height:190px}.preview-embed{height:220px}}
+
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo" aria-label="ScatterBench home">Scatter<span>Bench</span></a>
+    <nav aria-label="Main navigation">
+      <a class="active" aria-current="page" href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="https://discord.gg/VrHx9UgXsH" target="_blank" rel="noopener noreferrer">Discord ↗</a>
+      <a href="https://www.youtube.com/@ScatterBench" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+      <a href="https://buymeacoffee.com/scatterbench" target="_blank" rel="noopener noreferrer">Donate ↗</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title">Performance.<br><span>Made clear.</span></h1>
+        <p class="intro">Explore PC gaming benchmarks with detailed framerate graphs, frametimes, and hardware monitoring. All the numbers that matter, in one place.</p>
+        <div class="buttons">
+          <a class="button" href="graphs.html">Explore benchmarks <span aria-hidden="true">↗</span></a>
+          <a class="subtle-link" href="#latest">Latest test ↓</a>
+        </div>
+      </div>
+      <div class="preview youtube-preview" aria-label="Benchmark preview">
+   <div class="preview-head"><span class="preview-label">BENCHMARK VIDEO</span></div>
+   <h2>GTA V Enhanced - Tested</h2><p>Watch the latest ScatterBench benchmark gameplay.</p>
+   <div class="youtube-stage" id="youtube-stage" data-video-id="DDHN7yF0nZc" aria-label="Video preview"><button type="button" class="youtube-thumb" id="youtube-play" aria-label="Play benchmark video"><img src="https://i.ytimg.com/vi/DDHN7yF0nZc/hqdefault.jpg" alt="YouTube benchmark video thumbnail" loading="lazy"><span class="youtube-play-icon" aria-hidden="true">▶</span></button></div>
+   <div class="preview-footer preview-footer-right"><span class="youtube-links"><a id="youtube-watch" href="https://www.youtube.com/watch?v=DDHN7yF0nZc" target="_blank" rel="noopener noreferrer">Open on YouTube ↗</a></span></div>
+  </div>
+    </section>
+    <section id="latest" aria-labelledby="latest-heading">
+ <div class="section-head"><h2 id="latest-heading">Featured benchmarks</h2></div>
+ <div class="featured-grid"><article class="benchmark">
+  <div class="benchmark-info"><div class="category">4K</div><h3>GTA 5 Enhanced</h3><p>Ryzen 7 5700x · RX 6700 XT · Game Version</p></div>
+  <div class="benchmark-side"><div class="metric"><div class="number">52.86 <span class="unit">FPS</span></div><div class="name">Average framerate</div></div><div class="metric"><div class="number">23.57 <span class="unit">FPS</span></div><div class="name">1% low framerate</div></div><a class="open-benchmark" href="https://scatterbench-website.scatterbench.workers.dev/GTA-Benchmark" aria-label="View GTA 5 Enhanced benchmark results">View results <span aria-hidden="true">↗</span></a></div>
+ </article></div>
+ </section>
+  </main>
+  <script>
+(function(){
+'use strict';
+const favicon=document.getElementById('site-favicon');
+const preferred=favicon.getAttribute('data-image')||'';
+const names=[preferred];
+if(/^scatterbench2\.(?:png|jpe?g|webp|svg|ico)$/i.test(preferred)){
+  for(const ext of ['png','jpg','jpeg','webp','svg','ico'])names.push('scatterbench2.'+ext);
+}
+const candidates=[...new Set(names)].filter(Boolean);
+function probe(i){
+ if(i>=candidates.length)return;
+ const test=new Image();
+ test.onload=function(){
+    const name=candidates[i];
+    favicon.href=name;
+    const ext=name.split('.').pop().toLowerCase();
+    favicon.type=ext==='svg'?'image/svg+xml':ext==='webp'?'image/webp':ext==='png'?'image/png':ext==='ico'?'image/x-icon':'image/jpeg';
+ };
+ test.onerror=function(){probe(i+1);};
+ test.src=candidates[i];
+}
+probe(0);
+})();
+</script><script>
+(function(){
+'use strict';
+const stage=document.getElementById('youtube-stage');
+if(!stage)return;
+const videoId=stage.dataset.videoId || '';
+if(!/^[A-Za-z0-9_-]{11}$/.test(videoId))return;
+const play=stage.querySelector('.youtube-thumb');
+if(!play)return;
+play.addEventListener('click',function(){
+ const player=document.createElement('iframe');
+ player.src='https://www.youtube-nocookie.com/embed/'+videoId+'?autoplay=1&rel=0';
+ player.title='YouTube benchmark video';
+ player.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+ player.allowFullscreen=true;
+ player.referrerPolicy='strict-origin-when-cross-origin';
+ stage.replaceChildren(player);
+});
+})();
+</script>
+</body>
+</html>
